@@ -23,7 +23,6 @@ export const sendMail = async (mailReceiver, message) => {
 
     // Send Mail
     const info = await transport.sendMail(mailContents);
-    // console.log("Email sent:" + info.response)
   } catch (error) {
     console.log("Error sending Email:", error);
   }

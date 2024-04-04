@@ -24,6 +24,5 @@ userRouter.get("/shortid/:shortUrl", ClickShortUrl);
 userRouter.get("/geturlcounts", GetUrlcounts);
 
 userRouter.get("/authorized", authMiddleware, AdminDashboard);
-// userRouter.get('/authorized',AdminDashboard)
 
 export default userRouter;

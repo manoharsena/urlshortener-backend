@@ -20,10 +20,6 @@ export const RegisterUser = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // if (user || emailid) {
-    //     return res.status(400).json({ message: 'User already exists' });
-    // }
-
     const newUser = new User({
       firstname,
       lastname,
@@ -87,11 +83,8 @@ export const forgotPassword = async (req, res) => {
     if (userExists && req.body.email !== "") {
       const tokenString = userExists.token;
       const mailId = req.body.email;
-      // console.log(tokenString);
 
       // Reset Link
-      // const BaseUrl = 'http://localhost:3500/resetpassword'
-      // const  resetLink = BaseUrl
       const resetLink = `${process.env.RESET_LINK}?token=${tokenString}`;
       const message = `
             <p>Hello ${userExists.lastname},</p>
@@ -184,6 +177,7 @@ export const generateShortUrl = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 // Define the route handler
 export const ClickShortUrl = async (req, res) => {
   try {
@@ -206,7 +200,6 @@ export const ClickShortUrl = async (req, res) => {
     await shortURL.save();
 
     const longURL = urlObject.longUrl;
-    // console.log(longURL);
     // Redirect the user to the long URL
     res.redirect(longURL);
   } catch (error) {
@@ -217,7 +210,6 @@ export const ClickShortUrl = async (req, res) => {
 
 export const AdminDashboard = async (req, res) => {
   try {
-    // console.log(req.user)
     const userId = req.user._id;
 
     // Fetch the user document of the logged-in user
@@ -231,7 +223,7 @@ export const AdminDashboard = async (req, res) => {
     }
 
     const allusers = await User.find();
-    res.status(200).json({ message: "Authorized User", data: allusers }); //data: [user]
+    res.status(200).json({ message: "Authorized User", data: allusers }); 
   } catch (error) {
     console.log(error);
     res.status(500).json({ err: "Internal server Error " });
@@ -310,7 +302,6 @@ export const GetUrlcounts = async (req, res) => {
       },
       {
         $sort: {
-          // "_id": 1,
           count: 1, // Sorting URL counts in ascending order
         },
       },
